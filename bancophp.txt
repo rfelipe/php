@@ -1,0 +1,79 @@
+CREATE TABLE IF NOT EXISTS categoria (
+  cod_cat int(2) NOT NULL,
+  desc_cat varchar(25) DEFAULT NULL,
+  PRIMARY KEY (cod_cat)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+INSERT INTO categoria (cod_cat, desc_cat) VALUES
+(1, 'secretaria'),
+(2, 'desenvolvedor'),
+(3, 'gerente'),
+(4, 'almoxarifado');
+
+CREATE TABLE IF NOT EXISTS funcionario (
+  id_func int(5) NOT NULL AUTO_INCREMENT,
+  nome varchar(50) DEFAULT NULL,
+  sex varchar(1) DEFAULT NULL,
+  ender varchar(50) DEFAULT NULL,
+  sal double(7,2) DEFAULT NULL,
+  est varchar(2) DEFAULT NULL,
+  cid varchar(25) DEFAULT NULL,
+  cod_set int(2) DEFAULT NULL,
+  cod_cat int(2) DEFAULT NULL,
+  cod_proj int(5) DEFAULT NULL,
+  PRIMARY KEY (id_func),
+  KEY cod_set (cod_set),
+  KEY cod_cat (cod_cat),
+  KEY cod_proj (cod_proj)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+INSERT INTO funcionario (id_func, nome, sex, ender, sal, est, cid, cod_set, cod_cat, cod_proj) VALUES
+(1, 'funcionario1', 'm', 'algum lugar', 1200.00, 'RG', 'porto alegre', 1, 1, 1),
+(2, 'felipe souza rodrigues', 'm', 'holanda', 1200.00, 'rs', 'cachoeirinha', 9, 4, 3);
+
+CREATE TABLE IF NOT EXISTS projetos (
+  cod_proj int(5) NOT NULL,
+  desc_proj varchar(50) DEFAULT NULL,
+  PRIMARY KEY (cod_proj)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+INSERT INTO projetos (cod_proj, desc_proj) VALUES
+(1, 'projeto A'),
+(2, 'projeto B'),
+(3, 'projeto C'),
+(4, 'projeto D'),
+(5, 'projeto E'),
+(6, 'projeto F'),
+(7, 'projeto G');
+
+CREATE TABLE IF NOT EXISTS setor (
+  cod_set int(2) NOT NULL,
+  nome_set varchar(50) DEFAULT NULL,
+  PRIMARY KEY (cod_set)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+INSERT INTO setor (cod_set, nome_set) VALUES
+(1, 'producao'),
+(2, 'engenheiro'),
+(3, 'contabilidade'),
+(4, 'financeiro'),
+(5, 'tesouraria'),
+(6, 'RH'),
+(7, 'controle de qualidade'),
+(8, 'genrencia financeira'),
+(9, 'logistica'),
+(10, 'juridico');
+
+CREATE TABLE IF NOT EXISTS usuario (
+  id int(3) DEFAULT NULL,
+  usuario varchar(25) NOT NULL,
+  senha varchar(6) NOT NULL,
+  nome varchar(50) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+INSERT INTO usuario (id, usuario, senha, nome) VALUES
+(1, 'felipe', '010101', 'Felipe');
+
+ALTER TABLE funcionario ADD FOREIGN KEY(cod_set) REFERENCES setor (cod_set);
+ALTER TABLE funcionario ADD FOREIGN KEY(cod_cat) REFERENCES categoria (cod_cat);
+ALTER TABLE funcionario ADD FOREIGN KEY(cod_proj) REFERENCES projetos (cod_proj);
